@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "autohub_driver" "\0"
+            VALUE "FileDescription", "autohub_app" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "autohub_driver" "\0"
+            VALUE "InternalName", "autohub_app" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "autohub_driver.exe" "\0"
-            VALUE "ProductName", "autohub_driver" "\0"
+            VALUE "OriginalFilename", "autohub_app.exe" "\0"
+            VALUE "ProductName", "autohub_app" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
