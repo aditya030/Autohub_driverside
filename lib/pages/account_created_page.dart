@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:autohub_app/styles/app_colors.dart';
+import 'package:autohub_driverside/styles/app_colors.dart';
 
 class AccountCreatedPage extends StatelessWidget {
   const AccountCreatedPage({super.key});

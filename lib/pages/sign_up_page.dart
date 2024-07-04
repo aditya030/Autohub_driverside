@@ -1,4 +1,4 @@
-import 'package:autohub_app/pages/login_page.dart';
+import 'package:autohub_driverside/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:autohub_app/styles/app_colors.dart';
+import 'package:autohub_driverside/styles/app_colors.dart';
 
 class MapRidePricePage extends StatefulWidget {
   const MapRidePricePage({Key? key}) : super(key: key);

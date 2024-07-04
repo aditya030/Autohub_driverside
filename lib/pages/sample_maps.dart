@@ -1,5 +1,5 @@
-import 'package:autohub_app/pages/destination_page.dart';
-import 'package:autohub_app/styles/app_colors.dart';
+import 'package:autohub_driverside/pages/destination_page.dart';
+import 'package:autohub_driverside/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 // import 'package:latlong2/latlong.dart';
