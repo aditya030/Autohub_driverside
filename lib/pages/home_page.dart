@@ -3,8 +3,6 @@ import 'package:autohub_driverside/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,86 +13,80 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isPremiumSelected = true;
+  bool isOnline = true; // Add this variable
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.backgroundColor,
       body: Stack(
         children: [
-          // FlutterMap(
-          //   options: MapOptions(
-          //     initialCenter: LatLng(12.9692, 79.1559),
-          //     initialZoom: 15,
-          //   ),
-          //   children: [
-          //     TileLayer(
-          //       urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          //       userAgentPackageName: 'dev.vit.vellore',
-          //     ),
-          //     MarkerLayer(
-          //       markers: [
-          //         Marker(
-          //           point: LatLng(12.9692, 79.1559),
-          //           child: Icon(
-          //             Icons.location_on,
-          //             color: Colors.green,
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ],
-          // ),
-          Padding(
-            padding: const EdgeInsets.only(top: 50, left: 10),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: screenWidth * 0.8,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Navigate to search page
-                      Navigator.pushNamed(context, '/searchpage');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.backgroundColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        side: BorderSide(
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
-                      elevation: 0,
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(Icons.search, color: Colors.grey),
-                        SizedBox(width: 10),
-                        Text(
-                          "Search Location",
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: ClipOval(
-                    child: Image.asset(
-                      "assets/images/user2.png",
-                      width: screenWidth * 0.12,
-                      height: screenWidth * 0.12,
-                    ),
-                  ),
-                ),
-              ],
+           FlutterMap(
+            options: MapOptions(
+              initialCenter: LatLng(12.9692, 79.1559),
+              initialZoom: 15,
             ),
+            children: [
+              TileLayer(
+                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                userAgentPackageName: 'dev.vit.vellore',
+              ),
+              MarkerLayer(
+                markers: [
+                  Marker(
+                    point: LatLng(12.9692, 79.1559),
+                    child: Icon(
+                      Icons.location_on,
+                      color: Colors.green,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
+          Padding(
+  padding: const EdgeInsets.only(top: 50, left: 10, right: 10),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.center, // Center the button
+    children: [
+      Spacer(), // Add Spacer before the button
+      ElevatedButton(
+        onPressed: () {
+          setState(() {
+            isOnline = !isOnline; // Toggle online/offline status
+          });
+        },
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          backgroundColor: Colors.white,
+          side: BorderSide(
+            color: isOnline ? Colors.green : Colors.grey,
+          ),
+          elevation: 0,
+        ),
+        child: Text(
+          isOnline ? "Online" : "Offline",
+          style: TextStyle(
+            color: isOnline ? Colors.green : Colors.grey,
+          ),
+        ),
+      ),
+      Spacer(), // Add Spacer after the button
+      ClipOval(
+        child: Image.asset(
+          "assets/images/user2.png",
+          width: screenWidth * 0.12,
+          height: screenWidth * 0.12,
+        ),
+      ),
+    ],
+  ),
+),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -125,31 +117,24 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Divider(height: 0),
-                  SizedBox(
-                    height: screenHeight * 0.1,
-                    width: screenWidth,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          isPremiumSelected = false;
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0),
-                        ),
-                        backgroundColor: isPremiumSelected
-                            ? AppColors.offwhite
-                            : Color(0xff70D94C),
-                      ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isPremiumSelected = false;
+                      });
+                    },
+                    child: Container(
+                      height: screenHeight * 0.1,
+                      width: screenWidth,
+                      color: isPremiumSelected ? AppColors.offwhite : Color(0xff70D94C),
                       child: Row(
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 30),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(height: screenHeight * 0.025),
                                 Text(
                                   "Auto",
                                   style: TextStyle(
@@ -169,35 +154,37 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Spacer(),
+                          Text(
+                            "₹ --/km",
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                          SizedBox(width: 30),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: screenHeight * 0.1,
-                    width: screenWidth,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          isPremiumSelected = true;
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0),
-                        ),
-                        backgroundColor: isPremiumSelected
-                            ? Color(0xff70D94C)
-                            : AppColors.offwhite,
-                      ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isPremiumSelected = true;
+                      });
+                    },
+                    child: Container(
+                      height: screenHeight * 0.1,
+                      width: screenWidth,
+                      color: isPremiumSelected ? Color(0xff70D94C) : AppColors.offwhite,
                       child: Row(
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 30),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(height: screenHeight * 0.025),
                                 Text(
                                   "Premium Auto",
                                   style: TextStyle(
@@ -217,18 +204,28 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Spacer(),
+                          Text(
+                            "₹ --/km",
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                          SizedBox(width: 30),
                         ],
                       ),
                     ),
                   ),
                   SizedBox(height: screenHeight * 0.02),
-                  SizedBox(
+                  Container(
                     width: screenWidth * 0.9,
                     height: screenHeight * 0.08,
                     child: ElevatedButton(
                       onPressed: () {
-                        print("Button Clicked");
-                        Navigator.pushNamed(context, '/ride');
+                        setState(() {
+                          isPremiumSelected = !isPremiumSelected; // Toggle selection
+                        });
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -238,7 +235,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: Center(
                         child: Text(
-                          "Book this auto",
+                          "Switch Mode",
                           style: TextStyle(
                             color: AppColors.backgroundColor,
                             fontSize: 18,
