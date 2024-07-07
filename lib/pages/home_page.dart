@@ -1,11 +1,10 @@
-import 'package:autohub_driverside/components/text_field_style.dart';
-import 'package:autohub_driverside/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:autohub_driverside/styles/app_colors.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -21,6 +20,7 @@ class _HomePageState extends State<HomePage> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.backgroundColor,
       body: Stack(
         children: [
@@ -51,6 +51,10 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(top: 50, left: 10, right: 10),
             child: Row(
               children: [
+                IconButton(
+                  icon: Icon(Icons.menu),
+                  onPressed: () {},
+                ),
                 Spacer(),
                 ElevatedButton(
                   onPressed: () {
@@ -95,10 +99,12 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
             child: Container(
-              height: screenHeight * 0.40,
+              height: screenHeight * 0.42,
               width: screenWidth,
               decoration: BoxDecoration(
                 color: AppColors.backgroundColor,
@@ -117,155 +123,84 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 20, left: 29),
-                    child: SizedBox(
-                      height: screenHeight * 0.055,
-                      width: screenWidth,
-                      child: Text(
-                        "Choose your ride",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Container(
+                      width: 50,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(5),
                       ),
                     ),
                   ),
-                  Divider(height: 0),
-                  GestureDetector(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Choose your ride",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.arrow_forward,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 0),
+                  RideOption(
+                    title: "Auto",
+                    subtitle: "2-3 person",
+                    price: "₹ XX/km",
+                    isSelected: !isPremiumSelected,
                     onTap: () {
                       setState(() {
                         isPremiumSelected = false;
                       });
                     },
-                    child: Container(
-                      height: screenHeight * 0.1,
-                      width: screenWidth,
-                      color: isPremiumSelected ? AppColors.offwhite : Color(0xff70D94C),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 30),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Auto",
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w600,
-                                    color: isPremiumSelected ? Colors.black : Colors.white,
-                                  ),
-                                ),
-                                Text(
-                                  "2-3 Persons",
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: isPremiumSelected ? Colors.black : Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            "₹ XX/km",
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600,
-                              color: isPremiumSelected ? Colors.black : Colors.white,
-                            ),
-                          ),
-                          SizedBox(width: 30),
-                        ],
-                      ),
-                    ),
                   ),
-                  GestureDetector(
+                  RideOption(
+                    title: "Premium Auto",
+                    subtitle: "4-5 person",
+                    price: "₹ XX/km",
+                    isSelected: isPremiumSelected,
                     onTap: () {
                       setState(() {
                         isPremiumSelected = true;
                       });
                     },
-                    child: Container(
-                      height: screenHeight * 0.1,
-                      width: screenWidth,
-                      color: isPremiumSelected ? Color(0xff70D94C) : AppColors.offwhite,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 30),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Premium Auto",
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w600,
-                                    color: isPremiumSelected ? Colors.white : Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  "4-5 Persons",
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: isPremiumSelected ? Colors.white : Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            "₹ XX/km",
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600,
-                              color: isPremiumSelected ? Colors.white : Colors.black,
-                            ),
-                          ),
-                          SizedBox(width: 30),
-                        ],
-                      ),
-                    ),
                   ),
-                  SizedBox(height: screenHeight * 0.02),
+                  SizedBox(height: 20),
                   Container(
-                    width: screenWidth * 0.9,
-                    height: screenHeight * 0.08,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          isPremiumSelected = !isPremiumSelected; // Toggle selection
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        backgroundColor: Colors.black,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Switch Mode",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Icon(
-                            Icons.arrow_forward,
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Start The Ride",
+                          style: TextStyle(
                             color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(width: 10),
+                        Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -273,6 +208,74 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class RideOption extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final String price;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const RideOption({
+    required this.title,
+    required this.subtitle,
+    required this.price,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: isSelected ? Color(0xff70D94C) : Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: isSelected ? Colors.transparent : Colors.grey[300]!,
+          ),
+        ),
+        child: Row(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: isSelected ? Colors.white : Colors.black,
+                  ),
+                ),
+                SizedBox(height: 0),
+                Text(
+                  subtitle,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: isSelected ? Colors.white : Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+            Spacer(),
+            Text(
+              price,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: isSelected ? Colors.white : Colors.black,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
