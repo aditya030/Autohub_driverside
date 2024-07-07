@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isPremiumSelected = true;
-  bool isOnline = true; // Add this variable
+  bool isOnline = true;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: AppColors.backgroundColor,
       body: Stack(
         children: [
-           FlutterMap(
+          FlutterMap(
             options: MapOptions(
               initialCenter: LatLng(12.9692, 79.1559),
               initialZoom: 15,
@@ -48,45 +48,53 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           Padding(
-  padding: const EdgeInsets.only(top: 50, left: 10, right: 10),
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.center, // Center the button
-    children: [
-      Spacer(), // Add Spacer before the button
-      ElevatedButton(
-        onPressed: () {
-          setState(() {
-            isOnline = !isOnline; // Toggle online/offline status
-          });
-        },
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            padding: const EdgeInsets.only(top: 50, left: 10, right: 10),
+            child: Row(
+              children: [
+                Spacer(),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      isOnline = !isOnline; // Toggle online/offline status
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    backgroundColor: Colors.white,
+                    side: BorderSide(
+                      color: isOnline ? Colors.green : Colors.grey,
+                    ),
+                    elevation: 0,
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.local_taxi,
+                        color: isOnline ? Colors.green : Colors.grey,
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        isOnline ? "Online" : "Offline",
+                        style: TextStyle(
+                          color: isOnline ? Colors.green : Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Spacer(),
+                ClipOval(
+                  child: Image.asset(
+                    "assets/images/user2.png",
+                    width: screenWidth * 0.12,
+                    height: screenWidth * 0.12,
+                  ),
+                ),
+              ],
+            ),
           ),
-          backgroundColor: Colors.white,
-          side: BorderSide(
-            color: isOnline ? Colors.green : Colors.grey,
-          ),
-          elevation: 0,
-        ),
-        child: Text(
-          isOnline ? "Online" : "Offline",
-          style: TextStyle(
-            color: isOnline ? Colors.green : Colors.grey,
-          ),
-        ),
-      ),
-      Spacer(), // Add Spacer after the button
-      ClipOval(
-        child: Image.asset(
-          "assets/images/user2.png",
-          width: screenWidth * 0.12,
-          height: screenWidth * 0.12,
-        ),
-      ),
-    ],
-  ),
-),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -98,6 +106,13 @@ class _HomePageState extends State<HomePage> {
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(30),
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 10,
+                    spreadRadius: 5,
+                  ),
+                ],
               ),
               child: Column(
                 children: [
@@ -140,14 +155,14 @@ class _HomePageState extends State<HomePage> {
                                   style: TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.w600,
-                                    color: AppColors.primaryColor,
+                                    color: isPremiumSelected ? Colors.black : Colors.white,
                                   ),
                                 ),
                                 Text(
                                   "2-3 Persons",
                                   style: TextStyle(
                                     fontSize: 10,
-                                    color: AppColors.primaryColor,
+                                    color: isPremiumSelected ? Colors.black : Colors.white,
                                   ),
                                 ),
                               ],
@@ -155,11 +170,11 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Spacer(),
                           Text(
-                            "₹ --/km",
+                            "₹ XX/km",
                             style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.w600,
-                              color: AppColors.primaryColor,
+                              color: isPremiumSelected ? Colors.black : Colors.white,
                             ),
                           ),
                           SizedBox(width: 30),
@@ -190,14 +205,14 @@ class _HomePageState extends State<HomePage> {
                                   style: TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.w600,
-                                    color: AppColors.primaryColor,
+                                    color: isPremiumSelected ? Colors.white : Colors.black,
                                   ),
                                 ),
                                 Text(
                                   "4-5 Persons",
                                   style: TextStyle(
                                     fontSize: 10,
-                                    color: AppColors.primaryColor,
+                                    color: isPremiumSelected ? Colors.white : Colors.black,
                                   ),
                                 ),
                               ],
@@ -205,11 +220,11 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Spacer(),
                           Text(
-                            "₹ --/km",
+                            "₹ XX/km",
                             style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.w600,
-                              color: AppColors.primaryColor,
+                              color: isPremiumSelected ? Colors.white : Colors.black,
                             ),
                           ),
                           SizedBox(width: 30),
@@ -231,17 +246,25 @@ class _HomePageState extends State<HomePage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),
                         ),
-                        backgroundColor: AppColors.primaryColor,
+                        backgroundColor: Colors.black,
                       ),
-                      child: Center(
-                        child: Text(
-                          "Switch Mode",
-                          style: TextStyle(
-                            color: AppColors.backgroundColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Switch Mode",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                        ),
+                          SizedBox(width: 10),
+                          Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -254,4 +277,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
