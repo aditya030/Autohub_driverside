@@ -9,6 +9,8 @@ class AddBidPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Bid'),
+        backgroundColor: Colors.white, // Set app bar background color to white
+        iconTheme: IconThemeData(color: Colors.black), // Set icon color to black
       ),
       body: Stack(
         children: [
