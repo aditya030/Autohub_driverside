@@ -41,7 +41,7 @@ class _BookingPageState extends State<BookingPagem> {
                 markers: [
                   Marker(
                     point: LatLng(12.9692, 79.1559),
-                    child: Icon(
+                    child: const Icon(
                       Icons.location_on,
                       color: Colors.green,
                     ),
@@ -54,37 +54,51 @@ class _BookingPageState extends State<BookingPagem> {
             top: 50.0,
             left: 15.0,
             child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
           ),
-          Center(
-            child: GestureDetector(
-              onTap: toggleOnlineStatus,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                decoration: BoxDecoration(
-                  color: isOnline ? Colors.green : Colors.grey,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  isOnline ? 'Online' : 'Offline',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
+          Positioned(
+            top: 50.0,
+            right: 15.0,
+            child: const CircleAvatar(
+              backgroundImage: AssetImage('assets/images/user2.png'),
+              radius: 30,
             ),
           ),
           Positioned(
             top: 50.0,
-            right: 15.0,
-            child: CircleAvatar(
-              backgroundImage: AssetImage('assets/images/user2.png'),
-              radius: 30,
+            left: (screenWidth - 160) / 2, // Center the button horizontally
+            child: ElevatedButton(
+              onPressed: toggleOnlineStatus,
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                backgroundColor: Colors.white,
+                side: BorderSide(
+                  color: isOnline ? Colors.green : Colors.grey,
+                ),
+                elevation: 0,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.local_taxi,
+                    color: isOnline ? Colors.green : Colors.grey,
+                  ),
+                  const SizedBox(width: 5),
+                  Text(
+                    isOnline ? "Online" : "Offline",
+                    style: TextStyle(
+                      color: isOnline ? Colors.green : Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Positioned(
@@ -92,7 +106,7 @@ class _BookingPageState extends State<BookingPagem> {
             child: Container(
               height: screenHeight * 0.45,
               width: screenWidth,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
@@ -101,21 +115,20 @@ class _BookingPageState extends State<BookingPagem> {
               ),
               child: Column(
                 children: [
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
                       children: [
-                        CircleAvatar(
-                          backgroundImage:
-                              AssetImage('assets/images/user2.png'),
+                        const CircleAvatar(
+                          backgroundImage: AssetImage('assets/images/user2.png'),
                           radius: 25,
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "John Doe",
                               style: TextStyle(
                                 fontSize: 18,
@@ -124,7 +137,7 @@ class _BookingPageState extends State<BookingPagem> {
                               ),
                             ),
                             Row(
-                              children: [
+                              children: const [
                                 Icon(
                                   Icons.star,
                                   color: Colors.yellow,
@@ -141,8 +154,8 @@ class _BookingPageState extends State<BookingPagem> {
                             ),
                           ],
                         ),
-                        Spacer(),
-                        Icon(
+                        const Spacer(),
+                        const Icon(
                           Icons.chat_bubble_outline,
                           color: Colors.green,
                           size: 30,
@@ -150,36 +163,36 @@ class _BookingPageState extends State<BookingPagem> {
                       ],
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
                       children: [
                         Column(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.circle,
                               color: Colors.green,
                               size: 15,
                             ),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Container(
                               height: 30,
                               width: 1,
                               color: Colors.grey,
                             ),
-                            SizedBox(height: 5),
-                            Icon(
+                            const SizedBox(height: 5),
+                            const Icon(
                               Icons.location_on,
                               color: Colors.red,
                               size: 15,
                             ),
                           ],
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: const [
                             Text(
                               "CMC",
                               style: TextStyle(
@@ -200,7 +213,7 @@ class _BookingPageState extends State<BookingPagem> {
                       ],
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
@@ -212,7 +225,7 @@ class _BookingPageState extends State<BookingPagem> {
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: const [
                             Text(
                               "Distance",
                               style: TextStyle(
@@ -232,7 +245,7 @@ class _BookingPageState extends State<BookingPagem> {
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: const [
                             Text(
                               "Time",
                               style: TextStyle(
@@ -252,7 +265,7 @@ class _BookingPageState extends State<BookingPagem> {
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: const [
                             Text(
                               "Price",
                               style: TextStyle(
@@ -273,7 +286,7 @@ class _BookingPageState extends State<BookingPagem> {
                       ],
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: SizedBox(
@@ -295,7 +308,7 @@ class _BookingPageState extends State<BookingPagem> {
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Icon(Icons.cancel, color: Colors.white),
                             SizedBox(width: 10),
                             Text(
@@ -311,7 +324,7 @@ class _BookingPageState extends State<BookingPagem> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 28),
+                  const SizedBox(height: 28),
                 ],
               ),
             ),
