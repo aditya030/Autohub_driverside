@@ -45,7 +45,7 @@ class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black26,
+                    color: Colors.black,
                     blurRadius: 10,
                     offset: Offset(0, 5),
                   ),
@@ -73,8 +73,13 @@ class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
                       controller: _autoTypeController,
                       decoration: InputDecoration(
                         labelText: 'Auto Type',
+                        labelStyle: TextStyle(color: Colors.black),
                         hintText: 'Big/Small/Medium',
                         border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
@@ -84,8 +89,13 @@ class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
                       controller: _autoNumberController,
                       decoration: InputDecoration(
                         labelText: 'Auto Number',
+                        labelStyle: TextStyle(color: Colors.black),
                         hintText: 'Vehicle Number',
                         border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
@@ -95,8 +105,13 @@ class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
                       controller: _vitPassNumberController,
                       decoration: InputDecoration(
                         labelText: 'VIT Pass Number',
+                        labelStyle: TextStyle(color: Colors.black),
                         hintText: 'VITVX-XXXXX-XX',
                         border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
@@ -117,7 +132,7 @@ class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: Colors.black,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -141,10 +156,4 @@ class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: VehicleDetailsPage(),
-  ));
 }
