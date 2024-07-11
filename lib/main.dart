@@ -27,6 +27,8 @@ import 'package:autohub_driverside/pages/driver_bids_page.dart';//driver
 import 'package:autohub_driverside/pages/ride_details_page.dart';//driver
 import 'package:autohub_driverside/pages/auto_details_ds.dart';//driver
 import 'package:autohub_driverside/pages/profile_driver.dart';//driver
+import 'package:autohub_driverside/pages/driver_earning_ds.dart';//driver
+
 
 void main() {
   runApp(MyApp());
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Lexend",
         scaffoldBackgroundColor: AppColors.backgroundColor,
       ),
-      initialRoute: '/vehicleinfo',
+      initialRoute: '/driverearn',
       routes: {
         '/': (context) => LoginPage(),
         '/ride': (context) => MapRidePricePage(),
@@ -62,11 +64,13 @@ class MyApp extends StatelessWidget {
         '/userbidpage': (context) => UserBidPage(),
         '/samplemap': (context) => SampleMaps(),
         //driver side
+
         '/bidpage1': (context) => BiddingPage(),
         '/bidpage2': (context) => DriverBidsPage(),
         '/ridedetail': (context) => RideDetailsPage(),
          '/bookpgm': (context) => BookingPagem(),
           '/vehicleinfo': (context) => VehicleDetailsPage(),
+          '/driverearn': (context) => DriverEarningsPage(),
       },
     );
   }
