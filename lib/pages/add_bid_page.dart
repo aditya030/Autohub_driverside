@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+=======
+import 'driver_bids_page.dart';
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
 
 class AddBidPage extends StatelessWidget {
   final TextEditingController driverNameController = TextEditingController();
@@ -54,15 +58,22 @@ class AddBidPage extends StatelessWidget {
                       height: 50.0, // Adjust the height as needed
                       child: ElevatedButton(
                         onPressed: () {
+<<<<<<< HEAD
                           // Validate and add the bid
+=======
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
                           _addBid(context);
                         },
                         child: const Text('Add Bid'),
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.black, // Background color
+<<<<<<< HEAD
                           padding: EdgeInsets.symmetric(
                               horizontal: 20.0, vertical: 12.0),
+=======
+                          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
@@ -84,7 +95,10 @@ class AddBidPage extends StatelessWidget {
     final String bidAmount = bidAmountController.text.trim();
 
     if (driverName.isNotEmpty && bidAmount.isNotEmpty) {
+<<<<<<< HEAD
       // Create a new Bid object
+=======
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
       Navigator.pop(
         context,
         Bid(
@@ -96,7 +110,10 @@ class AddBidPage extends StatelessWidget {
         ),
       );
     } else {
+<<<<<<< HEAD
       // Show error or handle validation
+=======
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -113,6 +130,7 @@ class AddBidPage extends StatelessWidget {
     }
   }
 }
+<<<<<<< HEAD
 
 class Bid {
   final String driverName;
@@ -129,3 +147,5 @@ class Bid {
     required this.payment,
   });
 }
+=======
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)

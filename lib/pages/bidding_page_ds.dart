@@ -11,6 +11,7 @@ class _BiddingPageState extends State<BiddingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Row(
@@ -33,11 +34,37 @@ class _BiddingPageState extends State<BiddingPage> {
             ),
           ),
         ],
+=======
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0), // Adjust the height as needed
+        child: AppBar(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(20), // Make the corners of app bar circular
+            ),
+          ),
+          title: Row(
+            children: [
+              Image.asset(
+                'assets/images/auto.png',
+                height: 30, // Adjust the height to fit your needs
+              ),
+              SizedBox(width: 10),
+              Text(
+                'AutoHub',
+                style: TextStyle(color: Colors.black),
+              ),
+            ],
+          ),
+        ),
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             ListTile(
+<<<<<<< HEAD
               title: Text('Sort by : ₹ Prices'),
             ),
             _buildPriceCard(context, 0, '₹246', 'CMC', 'VIT', 'Cash'),
@@ -49,6 +76,15 @@ class _BiddingPageState extends State<BiddingPage> {
                 'Katpadi Railway Station', 'Cash'),
             _buildPriceCard(
                 context, 4, '₹350', 'VIT Main Gate', 'Vellore Fort', 'Cash'),
+=======
+              title: Text('Sort by: ₹ Prices'),
+            ),
+            _buildPriceCard(context, 0, '₹246', 'CMC', 'VIT', 'Cash'),
+            _buildPriceCard(context, 1, '₹135', 'R Block', 'INOX Cinemas', 'Cash'),
+            _buildPriceCard(context, 2, '₹200', 'VIT Main Gate', 'Vellore Kitchen', 'Cash'),
+            _buildPriceCard(context, 3, '₹125', 'VIT Main Gate', 'Katpadi Railway Station', 'Cash'),
+            _buildPriceCard(context, 4, '₹350', 'VIT Main Gate', 'Vellore Fort', 'Cash'),
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
           ],
         ),
       ),
@@ -79,7 +115,16 @@ class _BiddingPageState extends State<BiddingPage> {
         setState(() {
           _selectedBidIndex = index;
         });
+<<<<<<< HEAD
         Navigator.pushNamed(context, '/rideDetails');
+=======
+        Navigator.pushNamed(context, '/bidpage2', arguments: {
+          'price': price,
+          'start': start,
+          'end': end,
+          'payment': payment,
+        });
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
       },
       child: Card(
         color: highlight ? Colors.green[100] : null,

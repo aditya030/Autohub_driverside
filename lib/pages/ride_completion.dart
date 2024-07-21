@@ -12,6 +12,10 @@ class RideCompletion extends StatefulWidget {
 
 class _RideCompletionState extends State<RideCompletion> {
   var _razorpay = Razorpay();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
   @override
   Widget build(BuildContext context) {
     double screenHeigth = MediaQuery.of(context).size.height;
@@ -21,7 +25,11 @@ class _RideCompletionState extends State<RideCompletion> {
       body: Column(
         children: [
           Padding(
+<<<<<<< HEAD
             padding: const EdgeInsets.only(top: 50, left: 22, right: 30,bottom: 6),
+=======
+            padding: const EdgeInsets.only(top: 50, left: 22, right: 30, bottom: 6),
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
             child: Align(
               alignment: Alignment.topLeft,
               child: RichText(
@@ -46,7 +54,10 @@ class _RideCompletionState extends State<RideCompletion> {
               ),
             ),
           ),
+<<<<<<< HEAD
           
+=======
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
           Padding(
             padding: const EdgeInsets.only(left: 22, right: 30),
             child: Row(
@@ -60,7 +71,11 @@ class _RideCompletionState extends State<RideCompletion> {
                   width: 10,
                 ),
                 Text(
+<<<<<<< HEAD
                   "G Murugan",
+=======
+                  "User1",
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
                   style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w500,
@@ -310,6 +325,7 @@ class _RideCompletionState extends State<RideCompletion> {
             height: 50,
             child: ElevatedButton(
               onPressed: () {
+<<<<<<< HEAD
                 // Navigator.of(context).pushReplacementNamed("/homepage");
                 var options = {
                   'key': 'rzp_test_4ZtM3uCcmSeeED',
@@ -324,6 +340,9 @@ class _RideCompletionState extends State<RideCompletion> {
                   }
                 };
                   _razorpay.open(options);
+=======
+                _showSuccessDialog(); // Show the success dialog
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
@@ -332,7 +351,11 @@ class _RideCompletionState extends State<RideCompletion> {
                 backgroundColor: AppColors.primaryColor,
               ),
               child: Text(
+<<<<<<< HEAD
                 "Payment",
+=======
+                "Submit Feedback",
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
                 style: TextStyle(
                   fontSize: 16,
                   color: AppColors.backgroundColor,
@@ -345,18 +368,30 @@ class _RideCompletionState extends State<RideCompletion> {
       ),
     );
   }
+<<<<<<< HEAD
   @override
   void initState() {
     // TODO: implement dispose      
+=======
+
+  @override
+  void initState() {
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
     super.initState();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
+<<<<<<< HEAD
   
   @override
   void dispose() {
     // TODO: implement dispose
+=======
+
+  @override
+  void dispose() {
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
     _razorpay.clear(); // Removes all listeners
     super.dispose();
   }
@@ -373,4 +408,26 @@ class _RideCompletionState extends State<RideCompletion> {
     // Do something when an external wallet is selected
   }
 
+<<<<<<< HEAD
+=======
+  void _showSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Success"),
+          content: Text("Feedback submitted successfully!"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
 }

@@ -29,7 +29,11 @@ class DriverEarningsPage extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
+<<<<<<< HEAD
                           color: Colors.green[200],
+=======
+                          color: Color.fromARGB(255, 77, 179, 80),
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(20.0),
                             bottomRight: Radius.circular(20.0),
@@ -147,7 +151,11 @@ class DriverEarningsPage extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 IconButton(
+<<<<<<< HEAD
                                   icon: Icon(Icons.message, color: Colors.green, size: 30),
+=======
+                                  icon: Icon(Icons.message, color: Color.fromARGB(255, 2, 147, 7), size: 30),
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
                                   onPressed: () {
                                     Navigator.push(
                                       context,

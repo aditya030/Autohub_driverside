@@ -1,1 +1,5 @@
+<<<<<<< HEAD
+=======
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
 #include "Generated.xcconfig"

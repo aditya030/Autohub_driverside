@@ -294,11 +294,15 @@ class _BookingPageState extends State<BookingPagem> {
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () {
+<<<<<<< HEAD
                           // Cancel booking action
 
                           // For now added the ride completion page.
                           Navigator.of(context)
                               .pushReplacementNamed("/ridecompletion");
+=======
+                          Navigator.of(context).pushReplacementNamed("/ridecompletion");
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.black,
@@ -309,10 +313,15 @@ class _BookingPageState extends State<BookingPagem> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
+<<<<<<< HEAD
                             Icon(Icons.cancel, color: Colors.white),
                             SizedBox(width: 10),
                             Text(
                               "Cancel Your Booking",
+=======
+                            Text(
+                              "Ride Completed",
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,

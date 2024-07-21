@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RideConfirmationPage extends StatelessWidget {
+class RideNotReceivedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -23,15 +23,15 @@ class RideConfirmationPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                AnimatedConfirmRide(),
+                AnimatedNotReceived(),
                 SizedBox(height: 20),
                 Text(
-                  'Your ride has been confirmed!',
+                  'Ride Not Received!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.green,
+                    color: Colors.red,
                   ),
                 ),
                 SizedBox(height: 30),
@@ -40,11 +40,7 @@ class RideConfirmationPage extends StatelessWidget {
                   height: screenHeight * 0.08,
                   child: ElevatedButton(
                     onPressed: () {
-<<<<<<< HEAD
-                      Navigator.pushNamed(context, '/Auto_details');
-=======
-                      Navigator.pushNamed(context, '/bookpgm');
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
+                      Navigator.pushNamed(context, '/bidpage1');
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -53,7 +49,7 @@ class RideConfirmationPage extends StatelessWidget {
                       backgroundColor: Colors.black,
                     ),
                     child: Text(
-                      'See your ride and driver info',
+                      'Find New Rides',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -62,33 +58,6 @@ class RideConfirmationPage extends StatelessWidget {
                     ),
                   ),
                 ),
-<<<<<<< HEAD
-=======
-                SizedBox(height: 20), // Space between buttons
-                SizedBox(
-                  width: screenWidth * 0.9,
-                  height: screenHeight * 0.08,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/notride');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      backgroundColor: Colors.red, // Different color for distinction
-                    ),
-                    child: Text(
-                      'Ride Not Received',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ),
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
               ],
             ),
           ),
@@ -98,12 +67,12 @@ class RideConfirmationPage extends StatelessWidget {
   }
 }
 
-class AnimatedConfirmRide extends StatefulWidget {
+class AnimatedNotReceived extends StatefulWidget {
   @override
-  _AnimatedConfirmRideState createState() => _AnimatedConfirmRideState();
+  _AnimatedNotReceivedState createState() => _AnimatedNotReceivedState();
 }
 
-class _AnimatedConfirmRideState extends State<AnimatedConfirmRide> with SingleTickerProviderStateMixin {
+class _AnimatedNotReceivedState extends State<AnimatedNotReceived> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -132,8 +101,8 @@ class _AnimatedConfirmRideState extends State<AnimatedConfirmRide> with SingleTi
     return ScaleTransition(
       scale: _animation,
       child: Icon(
-        Icons.check_circle,
-        color: Colors.green,
+        Icons.cancel,
+        color: Colors.red,
         size: 100,
       ),
     );

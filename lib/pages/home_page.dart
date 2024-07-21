@@ -187,6 +187,7 @@ class _HomePageState extends State<HomePage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+<<<<<<< HEAD
                         Text(
                           "Start The Ride",
                           style: TextStyle(
@@ -200,6 +201,22 @@ class _HomePageState extends State<HomePage> {
                           Icons.arrow_forward,
                           color: Colors.white,
                         ),
+=======
+                        ElevatedButton(onPressed: (){Navigator.pushNamed(context, '/ride');}, child: Text("Click Here")),
+                        // Text(
+                        //   "Start The Ride",
+                        //   style: TextStyle(
+                        //     color: Colors.white,
+                        //     fontSize: 16,
+                        //     fontWeight: FontWeight.w600,
+                        //   ),
+                        // ),
+                        // SizedBox(width: 10),
+                        // Icon(
+                        //   Icons.arrow_forward,
+                        //   color: Colors.white,
+                        // ),
+>>>>>>> 07d8e1b (Vatsal Connecting to Github)
                       ],
                     ),
                   ),
