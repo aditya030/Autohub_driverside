@@ -28,10 +28,7 @@ import 'package:autohub_driverside/pages/ride_details_page.dart';//driver
 import 'package:autohub_driverside/pages/auto_details_ds.dart';//driver
 import 'package:autohub_driverside/pages/profile_driver.dart';//driver
 import 'package:autohub_driverside/pages/driver_earning_ds.dart';//driver
-<<<<<<< HEAD
-=======
 import 'package:autohub_driverside/pages/ride_not.dart';//driver
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
 
 
 void main() {
@@ -46,11 +43,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Lexend",
         scaffoldBackgroundColor: AppColors.backgroundColor,
       ),
-<<<<<<< HEAD
-      initialRoute: '/driverearn',
-=======
-      initialRoute: '/',
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
+      initialRoute: '/bidpage1',
       routes: {
         '/': (context) => LoginPage(),
         '/ride': (context) => MapRidePricePage(),
@@ -76,17 +69,11 @@ class MyApp extends StatelessWidget {
         '/bidpage1': (context) => BiddingPage(),
         '/bidpage2': (context) => DriverBidsPage(),
         '/ridedetail': (context) => RideDetailsPage(),
-<<<<<<< HEAD
-         '/bookpgm': (context) => BookingPagem(),
-          '/vehicleinfo': (context) => VehicleDetailsPage(),
-          '/driverearn': (context) => DriverEarningsPage(),
-=======
         '/bookpgm': (context) => BookingPagem(),
         '/vehicleinfo': (context) => VehicleDetailsPage(),
         '/driverearn': (context) => DriverEarningsPage(),
-        '/driverearn': (context) => DriverEarningsPage(),
+        // '/driverearn': (context) => DriverEarningsPage(),
         '/notride':(context)=>RideNotReceivedPage(),
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
       },
     );
   }

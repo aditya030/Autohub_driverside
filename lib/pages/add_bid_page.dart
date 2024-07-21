@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-=======
-import 'driver_bids_page.dart';
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
+import 'package:autohub_driverside/pages/driver_bids_page.dart'; // Ensure Bid class is imported
 
 class AddBidPage extends StatelessWidget {
   final TextEditingController driverNameController = TextEditingController();
@@ -12,7 +9,7 @@ class AddBidPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Bid'),
+        title: Text(''),
         backgroundColor: Colors.white, // Set app bar background color to white
         iconTheme: IconThemeData(color: Colors.black), // Set icon color to black
       ),
@@ -58,22 +55,15 @@ class AddBidPage extends StatelessWidget {
                       height: 50.0, // Adjust the height as needed
                       child: ElevatedButton(
                         onPressed: () {
-<<<<<<< HEAD
                           // Validate and add the bid
-=======
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
                           _addBid(context);
                         },
                         child: const Text('Add Bid'),
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.black, // Background color
-<<<<<<< HEAD
                           padding: EdgeInsets.symmetric(
                               horizontal: 20.0, vertical: 12.0),
-=======
-                          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
@@ -91,61 +81,25 @@ class AddBidPage extends StatelessWidget {
   }
 
   void _addBid(BuildContext context) {
-    final String driverName = driverNameController.text.trim();
-    final String bidAmount = bidAmountController.text.trim();
-
-    if (driverName.isNotEmpty && bidAmount.isNotEmpty) {
-<<<<<<< HEAD
-      // Create a new Bid object
-=======
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
-      Navigator.pop(
-        context,
-        Bid(
-          driverName: driverName,
-          price: '₹$bidAmount', // Assuming you format the amount as needed
-          start: '', // You may add default values or handle differently
-          end: '',
-          payment: 'Cash', // Example, adjust as per your needs
-        ),
+    if (driverNameController.text.isNotEmpty &&
+        bidAmountController.text.isNotEmpty) {
+      final newBid = Bid(
+        driverName: driverNameController.text,
+        price: '₹${bidAmountController.text}', // Format price with ₹ symbol
+        start: 'CMC', // Example value, replace with actual value
+        end: 'VIT', // Example value, replace with actual value
+        payment: 'Cash', // Example value, replace with actual value
       );
+      Navigator.pop(context, newBid);
     } else {
-<<<<<<< HEAD
-      // Show error or handle validation
-=======
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Validation Error'),
-          content: Text('Please enter both Driver Name and Bid Amount.'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text('OK'),
-            ),
-          ],
+      // Show error message if fields are empty
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please fill in all fields'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 2),
         ),
       );
     }
   }
 }
-<<<<<<< HEAD
-
-class Bid {
-  final String driverName;
-  final String price;
-  final String start;
-  final String end;
-  final String payment;
-
-  Bid({
-    required this.driverName,
-    required this.price,
-    required this.start,
-    required this.end,
-    required this.payment,
-  });
-}
-=======
->>>>>>> 07d8e1b (Vatsal Connecting to Github)

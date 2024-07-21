@@ -1,4 +1,3 @@
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:autohub_driverside/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -11,25 +10,15 @@ class RideCompletion extends StatefulWidget {
 }
 
 class _RideCompletionState extends State<RideCompletion> {
-  var _razorpay = Razorpay();
-<<<<<<< HEAD
-=======
-
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
   @override
   Widget build(BuildContext context) {
-    double screenHeigth = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           Padding(
-<<<<<<< HEAD
-            padding: const EdgeInsets.only(top: 50, left: 22, right: 30,bottom: 6),
-=======
             padding: const EdgeInsets.only(top: 50, left: 22, right: 30, bottom: 6),
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
             child: Align(
               alignment: Alignment.topLeft,
               child: RichText(
@@ -54,10 +43,6 @@ class _RideCompletionState extends State<RideCompletion> {
               ),
             ),
           ),
-<<<<<<< HEAD
-          
-=======
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
           Padding(
             padding: const EdgeInsets.only(left: 22, right: 30),
             child: Row(
@@ -71,11 +56,7 @@ class _RideCompletionState extends State<RideCompletion> {
                   width: 10,
                 ),
                 Text(
-<<<<<<< HEAD
-                  "G Murugan",
-=======
                   "User1",
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
                   style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w500,
@@ -95,7 +76,6 @@ class _RideCompletionState extends State<RideCompletion> {
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w500,
-                    // fontStyle: FontStyle.italic
                   ),
                 )
               ],
@@ -148,9 +128,36 @@ class _RideCompletionState extends State<RideCompletion> {
               ),
             ),
           ),
-          // Spacer(),
+          SizedBox(
+            height: 20, // Add spacing between the feedback text field and the button
+          ),
+          Container(
+            width: screenWidth * 0.70,
+            height: 50,
+            child: ElevatedButton(
+              onPressed: () {
+                _showSuccessDialog(); // Show the success dialog
+              },
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                backgroundColor: AppColors.primaryColor,
+              ),
+              child: Text(
+                "Submit Feedback",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: AppColors.backgroundColor,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
           Padding(
-            padding: const EdgeInsets.only(left: 22, right: 30),
+            padding: const EdgeInsets.only(left: 22),
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(
@@ -181,7 +188,6 @@ class _RideCompletionState extends State<RideCompletion> {
                       Padding(
                         padding:
                             const EdgeInsets.only(left: 22, top: 8, bottom: 8),
-                        // padding: const EdgeInsets.all(8.0)
                         child: Icon(
                           Icons.person_pin_circle_rounded,
                           color: Colors.green,
@@ -318,98 +324,24 @@ class _RideCompletionState extends State<RideCompletion> {
               ],
             ),
           ),
-          SizedBox(height: 16,),
-          Spacer(),
-          Container(
-            width: screenWidth * 0.85,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: () {
-<<<<<<< HEAD
-                // Navigator.of(context).pushReplacementNamed("/homepage");
-                var options = {
-                  'key': 'rzp_test_4ZtM3uCcmSeeED',
-                  'amount': 135*100, //in the smallest currency sub-unit.
-                  'name': 'Autohub',
-                  // 'order_id': 'order_EMBFqjDHEEn80l', // Generate order_id using Orders API
-                  'description': 'This is your total amount for the ride.',
-                  'timeout': 300, // in seconds
-                  'prefill': {
-                    'contact': '7524011662',
-                    'email': 'samarthverma1813@gmail.com'
-                  }
-                };
-                  _razorpay.open(options);
-=======
-                _showSuccessDialog(); // Show the success dialog
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                backgroundColor: AppColors.primaryColor,
-              ),
-              child: Text(
-<<<<<<< HEAD
-                "Payment",
-=======
-                "Submit Feedback",
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
-                style: TextStyle(
-                  fontSize: 16,
-                  color: AppColors.backgroundColor,
-                ),
-              ),
-            ),
-          ),
           SizedBox(height: 23),
         ],
       ),
     );
   }
-<<<<<<< HEAD
-  @override
-  void initState() {
-    // TODO: implement dispose      
-=======
 
   @override
   void initState() {
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
     super.initState();
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    // Razorpay initialization removed
   }
-<<<<<<< HEAD
-  
-  @override
-  void dispose() {
-    // TODO: implement dispose
-=======
 
   @override
   void dispose() {
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
-    _razorpay.clear(); // Removes all listeners
+    // Razorpay cleanup removed
     super.dispose();
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    // Do something when payment succeeds
-  }
-
-  void _handlePaymentError(PaymentFailureResponse response) {
-    // Do something when payment fails
-  }
-
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    // Do something when an external wallet is selected
-  }
-
-<<<<<<< HEAD
-=======
   void _showSuccessDialog() {
     showDialog(
       context: context,
@@ -429,5 +361,4 @@ class _RideCompletionState extends State<RideCompletion> {
       },
     );
   }
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
 }

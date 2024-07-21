@@ -40,11 +40,7 @@ class RideConfirmationPage extends StatelessWidget {
                   height: screenHeight * 0.08,
                   child: ElevatedButton(
                     onPressed: () {
-<<<<<<< HEAD
-                      Navigator.pushNamed(context, '/Auto_details');
-=======
                       Navigator.pushNamed(context, '/bookpgm');
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -62,8 +58,6 @@ class RideConfirmationPage extends StatelessWidget {
                     ),
                   ),
                 ),
-<<<<<<< HEAD
-=======
                 SizedBox(height: 20), // Space between buttons
                 SizedBox(
                   width: screenWidth * 0.9,
@@ -88,7 +82,6 @@ class RideConfirmationPage extends StatelessWidget {
                     ),
                   ),
                 ),
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
               ],
             ),
           ),

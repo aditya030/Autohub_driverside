@@ -1,10 +1,7 @@
+import 'dart:async'; // Import Timer
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:driver/pages/add_bid_page.dart';
-=======
-import 'dart:async';
 import 'package:autohub_driverside/pages/add_bid_page.dart';
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
+import 'package:autohub_driverside/pages/ride_confirmation_page.dart'; // Import the page
 
 class DriverBidsPage extends StatefulWidget {
   @override
@@ -13,7 +10,6 @@ class DriverBidsPage extends StatefulWidget {
 
 class _DriverBidsPageState extends State<DriverBidsPage> {
   List<Bid> bids = [
-<<<<<<< HEAD
     Bid(
         driverName: 'John Doe',
         price: '₹246',
@@ -46,52 +42,23 @@ class _DriverBidsPageState extends State<DriverBidsPage> {
         payment: 'Cash'),
   ];
 
-=======
-    Bid(driverName: 'John Doe', price: '₹246', start: 'CMC', end: 'VIT', payment: 'Cash'),
-    Bid(driverName: 'Alice Smith', price: '₹135', start: 'R Block', end: 'INOX Cinemas', payment: 'Cash'),
-    Bid(driverName: 'Bob Brown', price: '₹200', start: 'VIT Main Gate', end: 'Vellore Kitchen', payment: 'Cash'),
-    Bid(driverName: 'Emma Lee', price: '₹125', start: 'VIT Main Gate', end: 'Katpadi Railway Station', payment: 'Cash'),
-    Bid(driverName: 'Mike Wilson', price: '₹350', start: 'VIT Main Gate', end: 'Vellore Fort', payment: 'Cash'),
-  ];
-
-  Timer? _timer;
-  int _start = 30;
-
-  void _startTimer() {
-    _start = 30;
-    _timer?.cancel(); // Cancel any existing timer
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        if (_start > 0) {
-          _start--;
-        } else {
-          timer.cancel();
-          Navigator.pushNamedAndRemoveUntil(context, '/rideconfirmation', (route) => false);
-        }
-      });
-    });
-  }
+  late Timer _timer;
+  Duration _remainingTime = Duration(seconds: 30);
+  bool _showCountdown = false;
+  bool _showPopup = false;
 
   @override
   void dispose() {
-    _timer?.cancel(); // Cancel the timer when the widget is disposed
+    _timer.cancel();
     super.dispose();
   }
 
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Driver Bids'),
       ),
-<<<<<<< HEAD
-      body: ListView.builder(
-        itemCount: bids.length,
-        itemBuilder: (context, index) {
-          return _buildBidCard(context, index, bids[index]);
-        },
-=======
       body: Stack(
         children: [
           ListView.builder(
@@ -100,61 +67,97 @@ class _DriverBidsPageState extends State<DriverBidsPage> {
               return _buildBidCard(context, index, bids[index]);
             },
           ),
-          Positioned(
-            top: 10,
-            right: 10,
-            child: _start > 0
-                ? Container(
-                    padding: EdgeInsets.all(8.0),
-                    color: Colors.black54,
-                    child: Text(
-                      '$_start',
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+          if (_showCountdown)
+            Positioned(
+              top: 10,
+              right: 10,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                decoration: BoxDecoration(
+                  color: Colors.black, // Set the background color to black
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                child: Text(
+                  'Redirect in ${_remainingTime.inSeconds}s',
+                  style: TextStyle(color: Colors.white), // Set the text color to white
+                ),
+              ),
+            ),
+          if (_showPopup)
+            Positioned(
+              bottom: 0, // Position the popup at the bottom
+              left: 0,
+              right: 0,
+              child: Container(
+                color: Colors.green,
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Center(
+                  child: Text(
+                    'Bid added successfully!',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                  )
-                : Container(),
-          ),
+                  ),
+                ),
+              ),
+            ),
         ],
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _navigateToAddBid(context);
         },
         child: Icon(Icons.add),
+        backgroundColor: Colors.black, // Set the button color to black
+        foregroundColor: Colors.white, // Set the icon color to white
       ),
     );
   }
 
   void _navigateToAddBid(BuildContext context) async {
-<<<<<<< HEAD
     // Navigate to AddBidPage and wait for a result
     final newBid = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => AddBidPage()));
-=======
-    final newBid = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddBidPage()),
-    );
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
 
     if (newBid != null && newBid is Bid) {
       setState(() {
-        bids.add(newBid);
+        // Insert the new bid at the top of the list
+        bids.insert(0, newBid);
+
+        // Show the success popup
+        _showPopup = true;
+        // Hide the popup after 3 seconds
+        Future.delayed(Duration(seconds: 3), () {
+          setState(() {
+            _showPopup = false;
+          });
+        });
       });
-<<<<<<< HEAD
-=======
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Bid added successfully!'),
-          backgroundColor: Colors.green,
-          duration: Duration(seconds: 5),
-        ),
-      );
+      // Start the countdown timer
+      setState(() {
+        _showCountdown = true;
+        _remainingTime = Duration(seconds: 30);
+      });
 
-      _startTimer();
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
+      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+        if (_remainingTime.inSeconds <= 0) {
+          timer.cancel();
+          setState(() {
+            _showCountdown = false;
+          });
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => RideConfirmationPage()),
+          );
+        } else {
+          setState(() {
+            _remainingTime = _remainingTime - Duration(seconds: 1);
+          });
+        }
+      });
     }
   }
 
@@ -213,8 +216,6 @@ class _DriverBidsPageState extends State<DriverBidsPage> {
     );
   }
 }
-<<<<<<< HEAD
-=======
 
 class Bid {
   final String driverName;
@@ -231,4 +232,3 @@ class Bid {
     required this.payment,
   });
 }
->>>>>>> 07d8e1b (Vatsal Connecting to Github)
