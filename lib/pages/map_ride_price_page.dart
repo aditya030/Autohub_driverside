@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:fluttertoast/fluttertoast.dart'; // Import Fluttertoast
 import 'package:autohub_driverside/styles/app_colors.dart';
 
 class MapRidePricePage extends StatefulWidget {
@@ -13,6 +14,18 @@ class MapRidePricePage extends StatefulWidget {
 class _MapRidePricePageState extends State<MapRidePricePage> {
   bool isPremiumSelected = true;
   bool isOnline = true;
+
+  void _showToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,10 +173,15 @@ class _MapRidePricePageState extends State<MapRidePricePage> {
                     price: "₹ 14/km",
                     isSelected: !isPremiumSelected,
                     onTap: () {
+                      if (!isOnline) {
+                        _showToast("Please switch to online mode.");
+                        return;
+                      }
                       setState(() {
                         isPremiumSelected = false;
                       });
                     },
+                    isClickable: isOnline,
                   ),
                   RideOption(
                     title: "Premium Auto",
@@ -171,16 +189,25 @@ class _MapRidePricePageState extends State<MapRidePricePage> {
                     price: "₹ 18/km",
                     isSelected: isPremiumSelected,
                     onTap: () {
+                      if (!isOnline) {
+                        _showToast("Please switch to online mode.");
+                        return;
+                      }
                       setState(() {
                         isPremiumSelected = true;
                       });
                     },
+                    isClickable: isOnline,
                   ),
                   SizedBox(height: 20),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     child: ElevatedButton(
                       onPressed: () {
+                        if (!isOnline) {
+                          _showToast("Please switch to online mode.");
+                          return;
+                        }
                         Navigator.pushNamed(context, '/bidpage1');
                       },
                       style: ElevatedButton.styleFrom(
@@ -226,6 +253,7 @@ class RideOption extends StatelessWidget {
   final String price;
   final bool isSelected;
   final VoidCallback onTap;
+  final bool isClickable; // Add this parameter
 
   const RideOption({
     required this.title,
@@ -233,6 +261,7 @@ class RideOption extends StatelessWidget {
     required this.price,
     required this.isSelected,
     required this.onTap,
+    required this.isClickable, // Add this parameter
   });
 
   @override
