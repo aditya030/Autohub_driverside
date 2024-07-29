@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:autohub_driverside/pages/driver_bids_page.dart'; // Ensure Bid class is imported
 
 class AddBidPage extends StatelessWidget {
-  final TextEditingController driverNameController = TextEditingController();
+  final String driverName; // Fetch the driver's name from login details
   final TextEditingController bidAmountController = TextEditingController();
+
+  AddBidPage({required this.driverName});
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +32,12 @@ class AddBidPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  TextField(
-                    controller: driverNameController,
-                    decoration: InputDecoration(
-                      labelText: 'Driver Name',
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.8),
+                  Text(
+                    'Driver: $driverName', // Display the driver's name
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black.withOpacity(0.8),
                     ),
                   ),
                   SizedBox(height: 16.0),
@@ -81,10 +83,9 @@ class AddBidPage extends StatelessWidget {
   }
 
   void _addBid(BuildContext context) {
-    if (driverNameController.text.isNotEmpty &&
-        bidAmountController.text.isNotEmpty) {
+    if (bidAmountController.text.isNotEmpty) {
       final newBid = Bid(
-        driverName: driverNameController.text,
+        driverName: driverName, // Use the fetched driver name
         price: '₹${bidAmountController.text}', // Format price with ₹ symbol
         start: 'CMC', // Example value, replace with actual value
         end: 'VIT', // Example value, replace with actual value
@@ -92,10 +93,10 @@ class AddBidPage extends StatelessWidget {
       );
       Navigator.pop(context, newBid);
     } else {
-      // Show error message if fields are empty
+      // Show error message if the bid amount field is empty
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please fill in all fields'),
+          content: Text('Please enter a bid amount'),
           backgroundColor: Colors.red,
           duration: Duration(seconds: 2),
         ),

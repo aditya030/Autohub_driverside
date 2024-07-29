@@ -22,14 +22,13 @@ import 'package:autohub_driverside/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'package:autohub_driverside/pages/bidding_page_ds.dart';//driver
-import 'package:autohub_driverside/pages/driver_bids_page.dart';//driver
-import 'package:autohub_driverside/pages/ride_details_page.dart';//driver
-import 'package:autohub_driverside/pages/auto_details_ds.dart';//driver
-import 'package:autohub_driverside/pages/profile_driver.dart';//driver
-import 'package:autohub_driverside/pages/driver_earning_ds.dart';//driver
-import 'package:autohub_driverside/pages/ride_not.dart';//driver
-
+import 'package:autohub_driverside/pages/bidding_page_ds.dart'; // driver
+import 'package:autohub_driverside/pages/driver_bids_page.dart'; // driver
+import 'package:autohub_driverside/pages/ride_details_page.dart'; // driver
+import 'package:autohub_driverside/pages/auto_details_ds.dart'; // driver
+import 'package:autohub_driverside/pages/profile_driver.dart'; // driver
+import 'package:autohub_driverside/pages/driver_earning_ds.dart'; // driver
+import 'package:autohub_driverside/pages/ride_not.dart'; // driver
 
 void main() {
   runApp(MyApp());
@@ -43,7 +42,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Lexend",
         scaffoldBackgroundColor: AppColors.backgroundColor,
       ),
-      initialRoute: '/bidpage1',
+      initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),
         '/ride': (context) => MapRidePricePage(),
@@ -64,16 +63,14 @@ class MyApp extends StatelessWidget {
         '/rideconfirmation': (context) => RideConfirmationPage(),
         '/userbidpage': (context) => UserBidPage(),
         '/samplemap': (context) => SampleMaps(),
-        //driver side
-
+        // driver side
         '/bidpage1': (context) => BiddingPage(),
-        '/bidpage2': (context) => DriverBidsPage(),
+        '/bidpage2': (context) => DriverBidsPage(driverName: 'YourDriverName'), // Pass driverName
         '/ridedetail': (context) => RideDetailsPage(),
         '/bookpgm': (context) => BookingPagem(),
         '/vehicleinfo': (context) => VehicleDetailsPage(),
         '/driverearn': (context) => DriverEarningsPage(),
-        // '/driverearn': (context) => DriverEarningsPage(),
-        '/notride':(context)=>RideNotReceivedPage(),
+        '/notride': (context) => RideNotReceivedPage(),
       },
     );
   }

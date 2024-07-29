@@ -179,28 +179,35 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: 20),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Start The Ride",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/ride');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 15),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Start The Ride",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 10),
-                        Icon(
-                          Icons.arrow_forward,
-                          color: Colors.white,
-                        ),
-                      ],
+                          SizedBox(width: 10),
+                          Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

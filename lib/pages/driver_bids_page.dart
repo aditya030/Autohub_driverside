@@ -4,6 +4,10 @@ import 'package:autohub_driverside/pages/add_bid_page.dart';
 import 'package:autohub_driverside/pages/ride_confirmation_page.dart'; // Import the page
 
 class DriverBidsPage extends StatefulWidget {
+  final String driverName; // Add driverName parameter to the constructor
+
+  DriverBidsPage({required this.driverName});
+
   @override
   _DriverBidsPageState createState() => _DriverBidsPageState();
 }
@@ -119,7 +123,11 @@ class _DriverBidsPageState extends State<DriverBidsPage> {
   void _navigateToAddBid(BuildContext context) async {
     // Navigate to AddBidPage and wait for a result
     final newBid = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => AddBidPage()));
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddBidPage(driverName: widget.driverName),
+      ),
+    );
 
     if (newBid != null && newBid is Bid) {
       setState(() {
