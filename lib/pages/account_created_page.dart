@@ -38,7 +38,7 @@ class AccountCreatedPage extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   // Handle button press here
-                   Navigator.of(context).pushReplacementNamed("/homepage");
+                   Navigator.of(context).pushReplacementNamed("/ride");
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
