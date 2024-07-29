@@ -2,6 +2,7 @@ import 'dart:async'; // Import Timer
 import 'package:flutter/material.dart';
 import 'package:autohub_driverside/pages/add_bid_page.dart';
 import 'package:autohub_driverside/pages/ride_confirmation_page.dart'; // Import the page
+import 'package:fluttertoast/fluttertoast.dart'; // Import fluttertoast
 
 class DriverBidsPage extends StatefulWidget {
   final String driverName; // Add driverName parameter to the constructor
@@ -49,7 +50,6 @@ class _DriverBidsPageState extends State<DriverBidsPage> {
   late Timer _timer;
   Duration _remainingTime = Duration(seconds: 30);
   bool _showCountdown = false;
-  bool _showPopup = false;
 
   @override
   void dispose() {
@@ -87,26 +87,6 @@ class _DriverBidsPageState extends State<DriverBidsPage> {
                 ),
               ),
             ),
-          if (_showPopup)
-            Positioned(
-              bottom: 0, // Position the popup at the bottom
-              left: 0,
-              right: 0,
-              child: Container(
-                color: Colors.green,
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Center(
-                  child: Text(
-                    'Bid added successfully!',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -133,16 +113,17 @@ class _DriverBidsPageState extends State<DriverBidsPage> {
       setState(() {
         // Insert the new bid at the top of the list
         bids.insert(0, newBid);
-
-        // Show the success popup
-        _showPopup = true;
-        // Hide the popup after 3 seconds
-        Future.delayed(Duration(seconds: 3), () {
-          setState(() {
-            _showPopup = false;
-          });
-        });
       });
+
+      // Show the success toast message
+      Fluttertoast.showToast(
+        msg: "Bid added successfully!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
 
       // Start the countdown timer
       setState(() {
