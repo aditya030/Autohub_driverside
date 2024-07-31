@@ -1,55 +1,41 @@
-import 'dart:async'; // Import Timer
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:autohub_driverside/pages/add_bid_page.dart';
-import 'package:autohub_driverside/pages/ride_confirmation_page.dart'; // Import the page
-import 'package:fluttertoast/fluttertoast.dart'; // Import fluttertoast
+import 'add_bid_page.dart';
+import 'ride_confirmation_page.dart'; // Import the page
 
 class DriverBidsPage extends StatefulWidget {
-  final String driverName; // Add driverName parameter to the constructor
+  final String driverName;
+  final String destination;
 
-  DriverBidsPage({required this.driverName});
+  DriverBidsPage({required this.driverName, required this.destination});
 
   @override
   _DriverBidsPageState createState() => _DriverBidsPageState();
 }
 
 class _DriverBidsPageState extends State<DriverBidsPage> {
-  List<Bid> bids = [
-    Bid(
-        driverName: 'John Doe',
-        price: '₹246',
-        start: 'CMC',
-        end: 'VIT',
-        payment: 'Cash'),
-    Bid(
-        driverName: 'Alice Smith',
-        price: '₹135',
-        start: 'R Block',
-        end: 'INOX Cinemas',
-        payment: 'Cash'),
-    Bid(
-        driverName: 'Bob Brown',
-        price: '₹200',
-        start: 'VIT Main Gate',
-        end: 'Vellore Kitchen',
-        payment: 'Cash'),
-    Bid(
-        driverName: 'Emma Lee',
-        price: '₹125',
-        start: 'VIT Main Gate',
-        end: 'Katpadi Railway Station',
-        payment: 'Cash'),
-    Bid(
-        driverName: 'Mike Wilson',
-        price: '₹350',
-        start: 'VIT Main Gate',
-        end: 'Vellore Fort',
-        payment: 'Cash'),
-  ];
+  List<Bid> allBids = []; // List of all bids
+  Bid? _currentBid; // Variable to track the driver's current bid
+
+  List<Bid> get filteredBids {
+    print("Filtering bids for destination: ${widget.destination}");
+    final bids = allBids.where((bid) => bid.end == widget.destination).toList();
+    print("Filtered Bids: $bids");
+    return bids;
+  }
 
   late Timer _timer;
   Duration _remainingTime = Duration(seconds: 30);
   bool _showCountdown = false;
+  bool _showPopup = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Debugging: Print initial state
+    print("Destination: ${widget.destination}");
+    print("All Bids: ${allBids}");
+  }
 
   @override
   void dispose() {
@@ -65,12 +51,20 @@ class _DriverBidsPageState extends State<DriverBidsPage> {
       ),
       body: Stack(
         children: [
-          ListView.builder(
-            itemCount: bids.length,
-            itemBuilder: (context, index) {
-              return _buildBidCard(context, index, bids[index]);
-            },
-          ),
+          if (filteredBids.isEmpty)
+            Center(
+              child: Text(
+                'No bids available. Please add a bid.',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            )
+          else
+            ListView.builder(
+              itemCount: filteredBids.length,
+              itemBuilder: (context, index) {
+                return _buildBidCard(context, index, filteredBids[index]);
+              },
+            ),
           if (_showCountdown)
             Positioned(
               top: 10,
@@ -78,12 +72,32 @@ class _DriverBidsPageState extends State<DriverBidsPage> {
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 decoration: BoxDecoration(
-                  color: Colors.black, // Set the background color to black
+                  color: Colors.black,
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 child: Text(
                   'Redirect in ${_remainingTime.inSeconds}s',
-                  style: TextStyle(color: Colors.white), // Set the text color to white
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          if (_showPopup)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                color: Colors.green,
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Center(
+                  child: Text(
+                    'Bid added successfully!',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -93,39 +107,54 @@ class _DriverBidsPageState extends State<DriverBidsPage> {
         onPressed: () {
           _navigateToAddBid(context);
         },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.black, // Set the button color to black
-        foregroundColor: Colors.white, // Set the icon color to white
+        child: Icon(_currentBid == null ? Icons.add : Icons.edit),
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
       ),
     );
   }
 
   void _navigateToAddBid(BuildContext context) async {
-    // Navigate to AddBidPage and wait for a result
-    final newBid = await Navigator.push(
+    final editedBid = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AddBidPage(driverName: widget.driverName),
+        builder: (context) => AddBidPage(
+          driverName: widget.driverName,
+          initialBid: _currentBid,
+        ),
       ),
     );
 
-    if (newBid != null && newBid is Bid) {
+    if (editedBid != null && editedBid is Bid) {
       setState(() {
-        // Insert the new bid at the top of the list
-        bids.insert(0, newBid);
+        if (_currentBid == null) {
+          allBids.add(editedBid); // Add new bid if no current bid
+        } else {
+          final index = allBids.indexWhere((bid) =>
+              bid.driverName == _currentBid!.driverName &&
+              bid.end == _currentBid!.end);
+          if (index != -1) {
+            allBids[index] = editedBid; // Update existing bid
+          }
+        }
+        _currentBid = editedBid;
+
+        // Debugging: Print updated state
+        print("Added/Updated Bid: $editedBid");
+        print("All Bids: $allBids");
+
+        // Ensure bids are sorted in ascending order based on price
+        allBids.sort((a, b) => int.parse(a.price.replaceAll('₹', ''))
+            .compareTo(int.parse(b.price.replaceAll('₹', ''))));
+
+        _showPopup = true;
+        Future.delayed(Duration(seconds: 3), () {
+          setState(() {
+            _showPopup = false;
+          });
+        });
       });
 
-      // Show the success toast message
-      Fluttertoast.showToast(
-        msg: "Bid added successfully!",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-
-      // Start the countdown timer
       setState(() {
         _showCountdown = true;
         _remainingTime = Duration(seconds: 30);
@@ -220,5 +249,9 @@ class Bid {
     required this.end,
     required this.payment,
   });
-}
 
+  @override
+  String toString() {
+    return 'Bid(driverName: $driverName, price: $price, start: $start, end: $end, payment: $payment)';
+  }
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'driver_bids_page.dart'; // Import the DriverBidsPage
 
 class BiddingPage extends StatefulWidget {
   @override
@@ -22,17 +23,6 @@ class _BiddingPageState extends State<BiddingPage> {
             SizedBox(width: 10),
           ],
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(
-              child: Text(
-                '',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -41,14 +31,10 @@ class _BiddingPageState extends State<BiddingPage> {
               title: Text('Sort by : ₹ Prices'),
             ),
             _buildPriceCard(context, 0, '₹246', 'CMC', 'VIT', 'Cash'),
-            _buildPriceCard(
-                context, 1, '₹135', 'R Block', 'INOX Cinemas', 'Cash'),
-            _buildPriceCard(
-                context, 2, '₹200', 'VIT Main Gate', 'Vellore Kitchen', 'Cash'),
-            _buildPriceCard(context, 3, '₹125', 'VIT Main Gate',
-                'Katpadi Railway Station', 'Cash'),
-            _buildPriceCard(
-                context, 4, '₹350', 'VIT Main Gate', 'Vellore Fort', 'Cash'),
+            _buildPriceCard(context, 1, '₹135', 'R Block', 'INOX Cinemas', 'Cash'),
+            _buildPriceCard(context, 2, '₹200', 'VIT Main Gate', 'Vellore Kitchen', 'Cash'),
+            _buildPriceCard(context, 3, '₹125', 'VIT Main Gate', 'Katpadi Railway Station', 'Cash'),
+            _buildPriceCard(context, 4, '₹350', 'VIT Main Gate', 'Vellore Fort', 'Cash'),
           ],
         ),
       ),
@@ -71,15 +57,22 @@ class _BiddingPageState extends State<BiddingPage> {
     );
   }
 
-  Widget _buildPriceCard(BuildContext context, int index, String price,
-      String start, String end, String payment) {
+  Widget _buildPriceCard(BuildContext context, int index, String price, String start, String end, String payment) {
     bool highlight = _selectedBidIndex == index;
     return GestureDetector(
       onTap: () {
         setState(() {
           _selectedBidIndex = index;
         });
-        Navigator.pushNamed(context, '/bidpage2');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DriverBidsPage(
+              driverName: 'Driver Name', // Update this as needed
+              destination: end,
+            ),
+          ),
+        );
       },
       child: Card(
         color: highlight ? Colors.green[100] : null,

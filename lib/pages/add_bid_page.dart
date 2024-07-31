@@ -5,7 +5,7 @@ class AddBidPage extends StatelessWidget {
   final String driverName; // Fetch the driver's name from login details
   final TextEditingController bidAmountController = TextEditingController();
 
-  AddBidPage({required this.driverName});
+  AddBidPage({required this.driverName, Bid? initialBid});
 
   @override
   Widget build(BuildContext context) {

@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Lexend",
         scaffoldBackgroundColor: AppColors.backgroundColor,
       ),
-      initialRoute: '/',
+      initialRoute: '/bidpage1',
       routes: {
         '/': (context) => LoginPage(),
         '/ride': (context) => MapRidePricePage(),
@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
         '/samplemap': (context) => SampleMaps(),
         // driver side
         '/bidpage1': (context) => BiddingPage(),
-        '/bidpage2': (context) => DriverBidsPage(driverName: 'YourDriverName'), // Pass driverName
+        '/bidpage2': (context) => DriverBidsPage(driverName: 'YourDriverName', destination: '',), // Pass driverName
         '/ridedetail': (context) => RideDetailsPage(),
         '/bookpgm': (context) => BookingPagem(),
         '/vehicleinfo': (context) => VehicleDetailsPage(),
@@ -75,6 +75,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-////  PRIYA 
