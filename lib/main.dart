@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:autohub_driverside/pages/sample_maps.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:autohub_driverside/pages/account_created_page.dart';
@@ -19,9 +22,6 @@ import 'package:autohub_driverside/pages/sign_up_page.dart';
 import 'package:autohub_driverside/pages/user_bid_page.dart';
 import 'package:autohub_driverside/pages/user_details_page.dart';
 import 'package:autohub_driverside/styles/app_colors.dart';
-import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'package:autohub_driverside/pages/bidding_page_ds.dart'; // driver
 import 'package:autohub_driverside/pages/driver_bids_page.dart'; // driver
 import 'package:autohub_driverside/pages/ride_details_page.dart'; // driver
@@ -30,7 +30,11 @@ import 'package:autohub_driverside/pages/profile_driver.dart'; // driver
 import 'package:autohub_driverside/pages/driver_earning_ds.dart'; // driver
 import 'package:autohub_driverside/pages/ride_not.dart'; // driver
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -54,7 +58,7 @@ class MyApp extends StatelessWidget {
         '/driverinfo': (context) => DriverDetailsPage(),
         '/homeintro': (context) => SplashScreen(),
         '/signin': (context) => SigninPage(),
-        '/otp': (context) => VerificationPage(),
+        '/otp': (context) => OTPPage(),
         '/signup': (context) => SignupPage(),
         '/bidding': (context) => DriverListPage(),
         '/profilecompletion': (context) => ProfilePage(),
