@@ -1,4 +1,7 @@
+import 'package:autohub_driverside/pages/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DriverDetailsPage extends StatefulWidget {
   @override
@@ -17,11 +20,36 @@ class _DriverDetailsPageState extends State<DriverDetailsPage> {
   List<String> paymentMethods = ['UPI', 'CASH'];
   String selectedPaymentMethod = 'UPI';
 
+  final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
+
   void _addPaymentMethod(String method) {
     setState(() {
       paymentMethods.add(method);
       selectedPaymentMethod = method;
     });
+  }
+
+  void _saveDriverDetails() async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      await _firestore.collection('drivers').doc(user.uid).set({
+        'name': nameController.text,
+        'vehicleNumber': vehicleNumberController.text,
+        'phoneNumber': phoneNumberController.text,
+        'language': languageController.text,
+        'paymentMethods': paymentMethods,
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Driver details saved successfully')),
+      );
+      Navigator.pushReplacementNamed(
+          context, '/homepage'); // Navigate to home page
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('No user is signed in')),
+      );
+    }
   }
 
   @override
@@ -35,6 +63,12 @@ class _DriverDetailsPageState extends State<DriverDetailsPage> {
             Navigator.pop(context); // Handle back button press
           },
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: _saveDriverDetails,
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),

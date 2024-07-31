@@ -28,7 +28,7 @@ class _SignupPageState extends State<SignupPage> {
         email: email,
         password: password,
       );
-      Navigator.of(context).pushReplacementNamed("/userdetails");
+      Navigator.of(context).pushReplacementNamed("/driverinfo");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -120,8 +120,10 @@ class _SignupPageState extends State<SignupPage> {
                     style: TextStyle(fontSize: 16),
                   ),
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white, backgroundColor: Colors.black,
-                    padding: EdgeInsets.symmetric(horizontal: 44.0, vertical: 12.0),
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.black,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 44.0, vertical: 12.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
