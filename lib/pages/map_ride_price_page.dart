@@ -1,9 +1,16 @@
+import 'dart:async';
+import 'dart:convert';
+import 'package:autohub_driverside/components/const.dart';
+import 'package:autohub_driverside/components/network_utility.dart';
+import 'package:autohub_driverside/models/place_details_response.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:fluttertoast/fluttertoast.dart'; // Import Fluttertoast
+import 'package:fluttertoast/fluttertoast.dart'; 
 import 'package:autohub_driverside/styles/app_colors.dart';
-
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+// import 'package:latlong2/latlong.dart';
 class MapRidePricePage extends StatefulWidget {
   const MapRidePricePage({Key? key}) : super(key: key);
 
@@ -14,7 +21,30 @@ class MapRidePricePage extends StatefulWidget {
 class _MapRidePricePageState extends State<MapRidePricePage> {
   bool isPremiumSelected = true;
   bool isOnline = true;
-
+  late GoogleMapController mapController;
+  Location _locationController = Location();
+  final Completer<GoogleMapController> _mapController =
+      Completer<GoogleMapController>();
+  LatLng? _pCurrentLocation;
+  
+  // To get the place latitude and longitude
+  Future<LatLng?> getPlaceDetails(String placeId) async {
+    Uri uri = Uri.https("maps.googleapis.com", "maps/api/place/details/json", {
+      "place_id": placeId,
+      "key": GoogleApiKey,
+    });
+    String? response = await NetworkUtility.fetchUrl(uri);
+    if (response != null) {
+      PlaceDetailsResponse result =
+          PlaceDetailsResponse.parsePlaceDetailsResult(response);
+      if (result.result != null) {
+        final location = result.result!.geometry!.location;
+        return LatLng(location!.lat, location.lng);
+      }
+    }
+    return null;
+  }
+  
   void _showToast(String message) {
     Fluttertoast.showToast(
       msg: message,
@@ -25,6 +55,12 @@ class _MapRidePricePageState extends State<MapRidePricePage> {
       textColor: Colors.white,
       fontSize: 16.0,
     );
+  }
+  
+  @override
+  void initState() {
+    super.initState();
+    getLocationUpdates();
   }
 
   @override
@@ -37,29 +73,31 @@ class _MapRidePricePageState extends State<MapRidePricePage> {
       backgroundColor: AppColors.backgroundColor,
       body: Stack(
         children: [
-          FlutterMap(
-            options: MapOptions(
-              initialCenter: LatLng(12.9692, 79.1559),
-              initialZoom: 15,
-            ),
-            children: [
-              TileLayer(
-                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'dev.vit.vellore',
-              ),
-              MarkerLayer(
-                markers: [
-                  Marker(
-                    point: LatLng(12.9692, 79.1559),
-                    child: Icon(
-                      Icons.location_on,
-                      color: Colors.green,
-                    ),
+          _pCurrentLocation == null
+              ? Center(
+                  child: Image.asset(
+                    'assets/icons/loading_animation.gif',
+                    width: screenHeight * 0.3,
                   ),
-                ],
-              ),
-            ],
-          ),
+                )
+              : GoogleMap(
+                  onMapCreated: ((GoogleMapController controller) {
+                    _mapController.complete(controller);
+                    mapController = controller;
+                  }),
+                  mapType: MapType.normal,
+                  initialCameraPosition:
+                      CameraPosition(target: _pCurrentLocation!, zoom: 13),
+                  markers: {
+                    if (_pCurrentLocation != null)
+                      Marker(
+                        markerId: MarkerId("_currentLocation"),
+                        icon: BitmapDescriptor.defaultMarkerWithHue(90),
+                        position: _pCurrentLocation!,
+                      ),
+                  },
+                  // polylines: Set<Polyline>.of(polylines.values),
+                ),
           Padding(
             padding: const EdgeInsets.only(top: 50, left: 10, right: 10),
             child: Row(
@@ -245,6 +283,42 @@ class _MapRidePricePageState extends State<MapRidePricePage> {
       ),
     );
   }
+
+  Future<void> getLocationUpdates() async {
+    bool _serviceEnabled;
+    PermissionStatus _locationPermissionGranted;
+
+    // If Location is disabled send a prompt saying to turn on the location.
+    _serviceEnabled = await _locationController.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await _locationController.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _locationPermissionGranted = await _locationController.hasPermission();
+    if (_locationPermissionGranted == PermissionStatus.denied) {
+      _locationPermissionGranted =
+          await _locationController.requestPermission();
+      if (_locationPermissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationController.onLocationChanged
+        .listen((LocationData currentLocation) {
+      if (currentLocation.latitude != null &&
+          currentLocation.longitude != null) {
+        setState(() {
+          _pCurrentLocation =
+              LatLng(currentLocation.latitude!, currentLocation.longitude!);
+          print("Current Position: $currentLocation");
+        });
+      }
+    });
+  }
+
 }
 
 class RideOption extends StatelessWidget {
