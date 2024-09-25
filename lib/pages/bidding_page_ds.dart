@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'driver_bids_page.dart'; // Import the DriverBidsPage
 
@@ -21,22 +22,51 @@ class _BiddingPageState extends State<BiddingPage> {
               height: 30, // Adjust the height to fit your needs
             ),
             SizedBox(width: 10),
+            Text("Bidding Page", style: TextStyle(color: Colors.black)),
           ],
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ListTile(
-              title: Text('Sort by : ₹ Prices'),
-            ),
-            _buildPriceCard(context, 0, '₹246', 'CMC', 'VIT', 'Cash'),
-            _buildPriceCard(context, 1, '₹135', 'R Block', 'INOX Cinemas', 'Cash'),
-            _buildPriceCard(context, 2, '₹200', 'VIT Main Gate', 'Vellore Kitchen', 'Cash'),
-            _buildPriceCard(context, 3, '₹125', 'VIT Main Gate', 'Katpadi Railway Station', 'Cash'),
-            _buildPriceCard(context, 4, '₹350', 'VIT Main Gate', 'Vellore Fort', 'Cash'),
-          ],
-        ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('rides').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) {
+            return Center(child: Text('Error fetching ride data'));
+          }
+
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return Center(child: Text('No rides available'));
+          }
+
+          final rideDocs = snapshot.data!.docs;
+
+          return ListView.builder(
+            itemCount: rideDocs.length,
+            itemBuilder: (context, index) {
+              final rideData = rideDocs[index].data() as Map<String, dynamic>;
+
+              // Safely extract the data, handling GeoPoint
+              GeoPoint? sourceGeoPoint = rideData['source'] as GeoPoint?;
+              GeoPoint? destinationGeoPoint = rideData['destination'] as GeoPoint?;
+              String distance = rideData['distance'] ?? 'N/A';
+              String duration = rideData['duration'] ?? 'N/A';
+
+              // Display coordinates as strings (you can customize this)
+              String source = sourceGeoPoint != null
+                  ? '[${sourceGeoPoint.latitude}, ${sourceGeoPoint.longitude}]'
+                  : 'Unknown Source';
+              String destination = destinationGeoPoint != null
+                  ? '[${destinationGeoPoint.latitude}, ${destinationGeoPoint.longitude}]'
+                  : 'Unknown Destination';
+
+              return _buildPriceCard(
+                  context, index, distance, duration, source, destination);
+            },
+          );
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -57,7 +87,7 @@ class _BiddingPageState extends State<BiddingPage> {
     );
   }
 
-  Widget _buildPriceCard(BuildContext context, int index, String price, String start, String end, String payment) {
+  Widget _buildPriceCard(BuildContext context, int index, String distance, String duration, String start, String end) {
     bool highlight = _selectedBidIndex == index;
     return GestureDetector(
       onTap: () {
@@ -68,7 +98,7 @@ class _BiddingPageState extends State<BiddingPage> {
           context,
           MaterialPageRoute(
             builder: (context) => DriverBidsPage(
-              driverName: 'Driver Name', // Update this as needed
+              driverName: 'Driver Name', // You can update this with actual data
               destination: end,
             ),
           ),
@@ -83,10 +113,17 @@ class _BiddingPageState extends State<BiddingPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                price,
+                'Distance: $distance',
                 style: TextStyle(
-                  fontSize: 32,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Duration: $duration',
+                style: TextStyle(
+                  fontSize: 16,
                 ),
               ),
               SizedBox(height: 8),
@@ -94,7 +131,7 @@ class _BiddingPageState extends State<BiddingPage> {
                 children: [
                   Icon(Icons.location_on, color: Colors.green),
                   SizedBox(width: 8),
-                  Text(start),
+                  Text('Source: $start'),
                 ],
               ),
               if (end.isNotEmpty) ...[
@@ -103,12 +140,10 @@ class _BiddingPageState extends State<BiddingPage> {
                   children: [
                     Icon(Icons.location_on, color: Colors.red),
                     SizedBox(width: 8),
-                    Text(end),
+                    Text('Destination: $end'),
                   ],
                 ),
               ],
-              SizedBox(height: 8),
-              Text('Payment Mode: $payment'),
             ],
           ),
         ),
