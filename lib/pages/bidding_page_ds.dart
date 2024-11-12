@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';  // Add geocoding for reverse geocoding
 import 'driver_bids_page.dart'; // Import the DriverBidsPage
 
 class BiddingPage extends StatefulWidget {
@@ -9,6 +10,7 @@ class BiddingPage extends StatefulWidget {
 
 class _BiddingPageState extends State<BiddingPage> {
   int _selectedBidIndex = -1;
+  Map<int, String> _locationCache = {};  // Cache for place names
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +56,21 @@ class _BiddingPageState extends State<BiddingPage> {
               String distance = rideData['distance'] ?? 'N/A';
               String duration = rideData['duration'] ?? 'N/A';
 
-              // Display coordinates as strings (you can customize this)
-              String source = sourceGeoPoint != null
-                  ? '[${sourceGeoPoint.latitude}, ${sourceGeoPoint.longitude}]'
-                  : 'Unknown Source';
-              String destination = destinationGeoPoint != null
-                  ? '[${destinationGeoPoint.latitude}, ${destinationGeoPoint.longitude}]'
-                  : 'Unknown Destination';
+              // Fetch the place name for source and destination
+              String source = _locationCache.containsKey(index)
+                  ? _locationCache[index]!
+                  : 'Loading...';
+              String destination = _locationCache.containsKey(index + 1000)
+                  ? _locationCache[index + 1000]!
+                  : 'Loading...';
+
+              // Fetch the location name asynchronously and update the cache
+              if (!_locationCache.containsKey(index) && sourceGeoPoint != null) {
+                _fetchPlaceName(sourceGeoPoint, index, isSource: true);
+              }
+              if (!_locationCache.containsKey(index + 1000) && destinationGeoPoint != null) {
+                _fetchPlaceName(destinationGeoPoint, index + 1000, isSource: false);
+              }
 
               return _buildPriceCard(
                   context, index, distance, duration, source, destination);
@@ -85,6 +95,31 @@ class _BiddingPageState extends State<BiddingPage> {
         ],
       ),
     );
+  }
+
+  // Function to reverse geocode GeoPoint to place name
+  Future<void> _fetchPlaceName(GeoPoint geoPoint, int index, {required bool isSource}) async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        geoPoint.latitude,
+        geoPoint.longitude,
+      );
+
+      if (placemarks.isNotEmpty) {
+        String placeName = '${placemarks[0].locality}, ${placemarks[0].country}';
+        setState(() {
+          _locationCache[index] = placeName;
+        });
+      } else {
+        setState(() {
+          _locationCache[index] = isSource ? 'Unknown Source' : 'Unknown Destination';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _locationCache[index] = 'Error fetching location';
+      });
+    }
   }
 
   Widget _buildPriceCard(BuildContext context, int index, String distance, String duration, String start, String end) {
@@ -151,3 +186,5 @@ class _BiddingPageState extends State<BiddingPage> {
     );
   }
 }
+
+//UPDATE COORDINATES TO PLACE
